@@ -1,0 +1,148 @@
+<html>
+
+<head>
+</head>
+
+<body>
+
+<input type=text class="datefieldddmm" />
+
+<script>
+
+var _addSlashOnKeyDown = function()
+{
+		var classNames1 = document.querySelectorAll(".datefieldddmm");
+		var classNames2 = document.querySelectorAll(".datefieldmmyy");
+		if(classNames1.length != 0){
+			for(var i=0; i<classNames1.length; i++){
+			classNames1[i].addEventListener("keydown",function(e){_dateFormatMMDDYYYYKeyUp(this, e)});
+		}
+		}
+		if(classNames2.length != 0){
+			for(var j=0; j<classNames2.length; j++){
+				classNames2[j].addEventListener("keydown",function(e){_dateFormatMMYYYYKeyUp(this, e)});
+			}
+			
+		}
+		/**
+		 *  function    :  _dateFormatMMDDYYYYKeyUp
+		 *  Params      :  element,event_handle
+		 *  
+		 */
+			function _dateFormatMMDDYYYYKeyUp(element,event_handle)
+			{
+			var key_code;
+			key_code=0;
+			if (event_handle.keyCode)
+			{
+				key_code = event_handle.keyCode;
+				console.log("_dateFormatMMDDYYYYKeyUp -> if: key_code = " + key_code);
+			}
+			else if (event_handle.which && (event_handle.type.indexOf('key')!=-1))
+			{
+				key_code = event_handle.which;
+				console.log("_dateFormatMMDDYYYYKeyUp -> else if: key_code = " + key_code);
+			}
+			
+			if (key_code != 8 && key_code != 46 && key_code != 16 && key_code != 9 && (key_code < 33 || key_code > 40))
+			{
+				console.log("_dateFormatMMDDYYYYKeyUp ->  if: element = " + element);
+				addSlashToDateMMDDYYYY(element);
+			}
+			return true;
+		}
+		
+			/**
+			 *  function    :  addSlashToDateMMDDYYYY
+			 *  Description :  add slashed to date String to get MM/DD/YYYY format
+			 *  Params      :  element
+			 *  
+			 */
+		function addSlashToDateMMDDYYYY(element)
+		{
+			if (typeof element.value !== 'undefined' && element.value !== null){
+			 	var num_entered = element.value.split("/").join("").split("-").join("");
+			 	console.log("addSlashToDateMMDDYYYY ->  if: num_entered = " + num_entered);
+				if (num_entered.length >= 4){
+					element.value = num_entered.substr(0,2) + "/" + num_entered.substr(2,2) + "/" + num_entered.substr(4);
+					console.log("addSlashToDateMMDDYYYY ->  if: element.value = " + element.value);
+				}
+				else if (num_entered.length > 2){
+					element.value = num_entered.substr(0,2) + "/" + num_entered.substr(2);
+					console.log("addSlashToDateMMDDYYYY ->  if: element.value = " + element.value);
+				}
+				if(isSafariBrowser())
+				{
+					element.selectionStart = element.value.length;   
+					element.selectionEnd = element.value.length; 
+					element.focus();
+				}
+		  	}
+		}
+		/**
+		 *  function    :  _dateFormatMMYYYYKeyUp
+		 *  Params      :  element, event_handle
+		 *  
+		 */
+		function _dateFormatMMYYYYKeyUp(element, event_handle)
+		{
+			var key_code;
+			key_code=0;
+			if (event_handle.keyCode)
+			{
+				key_code = event_handle.keyCode;
+			}
+			else if (event_handle.which && (event_handle.type.indexOf('key')!=-1))
+			{
+				key_code = event_handle.which;
+			}
+			
+			if (key_code != 8 && key_code != 46 && key_code != 16 && key_code != 9 && (key_code < 33 || key_code > 40))
+				addSlashToDateMMYYYY(element);
+			return true;
+		}
+		/**
+		 *  function    :  addSlashToDateMMYYYY
+		 *  Description :  adding slashes to get MM/YYYY format 
+		 *  Params      :  element
+		 *  
+		 */
+		function addSlashToDateMMYYYY(element)
+		{
+			var num_entered = element.value.split("/").join("").split("-").join("");
+			if (num_entered.length >= 7 && num_entered.length<8)
+				element.value = num_entered.substr(0,2) + "/" + num_entered.substr(3);
+			else if (num_entered.length > 2)
+				element.value = num_entered.substr(0,2) + "/" + num_entered.substr(2);
+				
+			if(isSafariBrowser())
+			{
+				element.selectionStart = element.value.length;   
+				element.selectionEnd = element.value.length; 
+				element.focus();
+			}
+		}
+		/**
+		 *  function    :  isSafariBrowser
+		 *  Description :  Returns true / false - true if the client browser is safari
+		 *  Params      :  None
+		 *  
+		 */
+		function isSafariBrowser()
+		{
+			if ( (navigator.userAgent.toLowerCase().indexOf("safari")) >= 0)	    
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		}
+
+	_addSlashOnKeyDown();
+
+</script>
+</body>
+</html>
