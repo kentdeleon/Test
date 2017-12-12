@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Keyboard input test</title>
+</head>
+<body>
+<p>By clicking on the following input field and pressing a key it should show a real charCode.  This doesn't seem to happen with the current Chrome beta.</p>
+<input type="text" id="testing" name="testname">
+<div id="results"></div>
+<script>
+document.getElementById('testing').onkeydown = function(event) {
+    document.getElementById('results').innerHTML = event.keyCode;
+}
+</script>
+</body>
+</html>
