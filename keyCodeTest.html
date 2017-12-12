@@ -6,12 +6,29 @@
 </head>
 <body>
 <p>By clicking on the following input field and pressing a key it should show a real charCode.  This doesn't seem to happen with the current Chrome beta.</p>
-<input type="text" id="testing" name="testname">
+<input type="text" class="testing" name="testname">
 <div id="results"></div>
 <script>
-document.getElementById('testing').onkeydown = function(event) {
-    document.getElementById('results').innerHTML = event.keyCode;
+
+
+var element = document.getElementsByClassName("testing");
+
+element[0].addEventListener("blur", function(){addSlash(this)});
+
+function addSlash(element){
+	
+	var num_entered = element.value;
+		if (num_entered.length >= 4){
+							element.value = num_entered.substr(0,2) + "/" + num_entered.substr(2,2) + "/" + num_entered.substr(4);
+							console.log("addSlashToDateMMDDYYYY ->  if: element.value = " + element.value);
+		}else if (num_entered.length > 2){
+						element.value = num_entered.substr(0,2) + "/" + num_entered.substr(2);
+						console.log("addSlashToDateMMDDYYYY ->  if: element.value = " + element.value);
+		}
+	
 }
+
+
 </script>
 </body>
 </html>
